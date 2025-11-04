@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game</title>
+    <style>
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { text-shadow: 0 0 10px #4f9, 0 0 20px #4f9, 0 0 30px #4f9; }
+            50% { text-shadow: 0 0 15px #4f9, 0 0 25px #4f9, 0 0 35px #4f9; }
+        }
+
+        body {
+            margin: 0;
+            background-color: #0B0E18;
+            background-image: 
+                radial-gradient(circle at 20% 30%, #1a237e 0%, transparent 10%),
+                radial-gradient(circle at 80% 70%, #311b92 0%, transparent 10%),
+                radial-gradient(circle at 50% 50%, #000051 0%, transparent 50%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Arial', sans-serif;
+            color: #4f9;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background-image: radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px);
+            background-size: 50px 50px;
+            animation: starTwinkle 4s infinite;
+        }
+
+        .game-container {
+            position: relative;
+            background: rgba(11, 14, 24, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(79, 255, 153, 0.2);
+        }
+
+        #gameCanvas {
+            border: 2px solid #4f9;
+            background-color: rgba(0, 0, 0, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(79, 255, 153, 0.3);
+        }
+
+        .score-display {
+            position: absolute;
+            top: -50px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-around;
+            font-size: 32px;
+            font-weight: bold;
+            color: #4f9;
+            text-shadow: 0 0 10px rgba(79, 255, 153, 0.5);
+            animation: glowPulse 2s infinite;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: -80px;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+
+        button {
+            background-color: transparent;
+            border: 2px solid #4f9;
+            color: #4f9;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 25px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(79, 255, 153, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                120deg,
+                transparent,
+                rgba(79, 255, 153, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        button:hover {
+            background-color: rgba(79, 255, 153, 0.1);
+            box-shadow: 0 0 20px rgba(79, 255, 153, 0.5);
+            transform: translateY(-2px);
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        .instructions {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .game-over-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            border-radius: 8px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .game-over-screen.visible {
+            display: flex;
+        }
+
+        .winner-text {
+            font-size: 48px;
+            color: #fff;
+            margin-bottom: 20px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .final-score {
+            font-size: 24px;
+            color: #ddd;
+            margin-bottom: 30px;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .play-again-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            animation: bounceIn 0.5s ease-out;
+        }
+
+        .play-again-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes bounceIn {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.05); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="score-display">
+            <div id="player1Score">0</div>
+            <div id="player2Score">0</div>
+        </div>
+        <canvas id="gameCanvas"></canvas>
+        <div class="game-over-screen" id="gameOverScreen">
+            <div class="winner-text" id="winnerText"></div>
+            <div class="final-score" id="finalScore"></div>
+            <button class="play-again-btn" id="playAgainButton">Play Again</button>
+        </div>
+        <div class="controls">
+            <button id="startButton">Start Game</button>
+            <div class="instructions">
+                🚀 Use W/S keys to control your spacecraft | First to 5 points wins! 👾
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const startButton = document.getElementById('startButton');
+        
+        // Set canvas size
+        canvas.width = 800;
+        canvas.height = 400;
+
+        // Game objects
+        const paddleWidth = 10;
+        const paddleHeight = 60;
+        const ballSize = 8;
+        const WINNING_SCORE = 5;
+        const AI_SPEED = 4;
+        const AI_REACTION_DELAY = 0.1; // Lower number = faster reactions
+
+        let player1 = {
+            y: canvas.height / 2 - paddleHeight / 2,
+            score: 0,
+            speed: 0
+        };
+
+        let player2 = {
+            y: canvas.height / 2 - paddleHeight / 2,
+            score: 0,
+            speed: 0,
+            isAI: true
+        };
+
+        let ball = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            speed: 5,
+            dx: 5,
+            dy: 5
+        };
+
+        let gameRunning = false;
+        let animationId;
+
+        // Game functions
+        function drawPaddle(x, y, isPlayer) {
+            const gradient = ctx.createLinearGradient(x, y, x + paddleWidth, y);
+            if (isPlayer) {
+                gradient.addColorStop(0, '#4f9');
+                gradient.addColorStop(1, '#0ff');
+                ctx.shadowColor = '#4f9';
+            } else {
+                gradient.addColorStop(0, '#f54');
+                gradient.addColorStop(1, '#f0f');
+                ctx.shadowColor = '#f54';
+            }
+            ctx.shadowBlur = 10;
+            ctx.fillStyle = gradient;
+            ctx.fillRect(x, y, paddleWidth, paddleHeight);
+            ctx.shadowBlur = 0;
+        }
+
+        function drawBall() {
+            ctx.shadowColor = '#4f9';
+            ctx.shadowBlur = 15;
+            ctx.fillStyle = '#fff';
+            ctx.beginPath();
+            ctx.arc(ball.x, ball.y, ballSize, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        function drawCenterLine() {
+            ctx.setLineDash([5, 15]);
+            ctx.beginPath();
+            ctx.moveTo(canvas.width / 2, 0);
+            ctx.lineTo(canvas.width / 2, canvas.height);
+            ctx.strokeStyle = 'white';
+            ctx.stroke();
+            ctx.setLineDash([]);
+        }
+
+        function updateScore() {
+            document.getElementById('player1Score').textContent = player1.score;
+            document.getElementById('player2Score').textContent = player2.score;
+        }
+
+        function resetBall() {
+            ball.x = canvas.width / 2;
+            ball.y = canvas.height / 2;
+            ball.dx = ball.dx > 0 ? 5 : -5;
+            ball.dy = (Math.random() - 0.5) * 10;
+        }
+
+        function updateAI() {
+            if (!player2.isAI) return;
+            
+            // Predict where the ball will be
+            const targetY = ball.dx > 0 ? ball.y : canvas.height / 2;
+            const paddleCenter = player2.y + paddleHeight / 2;
+            
+            // Add some delay and imperfection to make it beatable
+            if (Math.abs(paddleCenter - targetY) > paddleHeight * AI_REACTION_DELAY) {
+                player2.speed = paddleCenter < targetY ? AI_SPEED : -AI_SPEED;
+            } else {
+                player2.speed = 0;
+            }
+        }
+
+        function showGameOver(winner) {
+            const gameOverScreen = document.getElementById('gameOverScreen');
+            const winnerText = document.getElementById('winnerText');
+            const finalScore = document.getElementById('finalScore');
+            
+            // Set winner text with appropriate message
+            if (winner === 'player') {
+                winnerText.innerHTML = '🚀 MISSION ACCOMPLISHED �';
+            } else {
+                winnerText.innerHTML = '� ALIEN VICTORY �';
+            }
+            
+            // Show final score
+            finalScore.textContent = `Final Score: ${player1.score} - ${player2.score}`;
+            
+            // Show game over screen with animation
+            gameOverScreen.classList.add('visible');
+        }
+
+        function checkWinner() {
+            if (player1.score >= WINNING_SCORE || player2.score >= WINNING_SCORE) {
+                gameRunning = false;
+                const winner = player1.score >= WINNING_SCORE ? 'player' : 'computer';
+                showGameOver(winner);
+                startButton.disabled = false;
+                startButton.textContent = 'Play Again';
+                return true;
+            }
+            return false;
+        }
+
+        function update() {
+            if (!gameRunning) return;
+
+            // Move paddles
+            player1.y = Math.max(0, Math.min(canvas.height - paddleHeight, player1.y + player1.speed));
+            updateAI();
+            player2.y = Math.max(0, Math.min(canvas.height - paddleHeight, player2.y + player2.speed));
+
+            // Move ball
+            ball.x += ball.dx;
+            ball.y += ball.dy;
+
+            // Ball collision with top and bottom
+            if (ball.y <= ballSize || ball.y >= canvas.height - ballSize) {
+                ball.dy *= -1;
+            }
+
+            // Ball collision with paddles
+            if (ball.dx < 0 && ball.x <= paddleWidth * 2 && 
+                ball.y >= player1.y && ball.y <= player1.y + paddleHeight) {
+                ball.dx *= -1.1; // Increase speed slightly
+                ball.dy = (ball.y - (player1.y + paddleHeight / 2)) * 0.2;
+            }
+
+            if (ball.dx > 0 && ball.x >= canvas.width - paddleWidth * 2 && 
+                ball.y >= player2.y && ball.y <= player2.y + paddleHeight) {
+                ball.dx *= -1.1; // Increase speed slightly
+                ball.dy = (ball.y - (player2.y + paddleHeight / 2)) * 0.2;
+            }
+
+            // Score points
+            if (ball.x <= 0) {
+                player2.score++;
+                updateScore();
+                if (!checkWinner()) {
+                    resetBall();
+                }
+            } else if (ball.x >= canvas.width) {
+                player1.score++;
+                updateScore();
+                if (!checkWinner()) {
+                    resetBall();
+                }
+            }
+
+            // Draw everything
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawCenterLine();
+            drawPaddle(paddleWidth, player1.y, true);
+            drawPaddle(canvas.width - paddleWidth * 2, player2.y, false);
+            drawBall();
+
+            animationId = requestAnimationFrame(update);
+        }
+
+        function startGame() {
+            if (gameRunning) return;
+            
+            // Hide game over screen if visible
+            const gameOverScreen = document.getElementById('gameOverScreen');
+            gameOverScreen.classList.remove('visible');
+            
+            // Reset game state
+            player1.y = canvas.height / 2 - paddleHeight / 2;
+            player2.y = canvas.height / 2 - paddleHeight / 2;
+            player1.score = 0;
+            player2.score = 0;
+            updateScore();
+            resetBall();
+            
+            gameRunning = true;
+            startButton.disabled = true;
+            update();
+        }
+
+        // Event listeners
+        document.addEventListener('keydown', (event) => {
+            event.preventDefault();
+            switch(event.key) {
+                case 'w':
+                case 'W':
+                    player1.speed = -5;
+                    break;
+                case 's':
+                case 'S':
+                    player1.speed = 5;
+                    break;
+            }
+        });
+
+        document.addEventListener('keyup', (event) => {
+            switch(event.key) {
+                case 'w':
+                case 'W':
+                case 's':
+                case 'S':
+                    player1.speed = 0;
+                    break;
+            }
+        });
+
+        startButton.addEventListener('click', startGame);
+        document.getElementById('playAgainButton').addEventListener('click', startGame);
+
+        // Initial draw
+        drawCenterLine();
+        drawPaddle(paddleWidth, player1.y);
+        drawPaddle(canvas.width - paddleWidth * 2, player2.y);
+        drawBall();
+    </script>
+</body>
+</html>
