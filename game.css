@@ -37,12 +37,32 @@ body {
 .start-screen h1 {
     font-size: 4rem;
     margin-bottom: 30px;
-    color: #fff;
+    color: #e8e6fa; /* Light text color */
+    text-shadow: 0 0 15px #6B66C5, 0 0 25px #6B66C5; /* Glow matching light shade */
 }
 
 .start-screen p {
     font-size: 1.5rem;
     margin-bottom: 40px;
+    color: #e8e6fa; /* Light text color */
+    text-shadow: 0 0 5px #e8e6fa; /* Subtle glow for text */
+}
+
+#spaceship {
+    width: 150px; /* Adjust size as needed */
+    height: auto;
+    position: absolute;
+    top: 20%; /* Adjust vertical position */
+    left: 50%;
+    transform: translateX(-50%);
+    animation: float 3s ease-in-out infinite;
+    z-index: 1;
+}
+
+@keyframes float {
+    0% { transform: translate(-50%, 0px); }
+    50% { transform: translate(-50%, 10px); }
+    100% { transform: translate(-50%, 0px); }
 }
 
 .difficulty-selection {
@@ -52,54 +72,62 @@ body {
 }
 
 .difficulty-button {
-    background-color: #555; /* Darker gray for inactive buttons */
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1rem;
+    background-color: #2F2975; /* Base spaceship color */
+    color: #e8e6fa; /* Light purple-blue text */
+    padding: 12px 25px;
+    border: 2px solid #6B66C5; /* Lighter shade for border */
+    border-radius: 8px;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.1s ease;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 10px rgba(107, 102, 197, 0.4); /* Glow matching border */
 }
 
 .difficulty-button:hover {
-    background-color: #777;
+    background-color: #3f398e; /* Slightly lighter for hover */
     transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(107, 102, 197, 0.7); /* Enhanced glow on hover */
 }
 
 .difficulty-button.active {
-    background-color: #007bff; /* Highlight active button */
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+    background-color: #2F2975; /* Active with base color */
+    box-shadow: 0 0 15px rgba(107, 102, 197, 0.7), 0 0 25px rgba(107, 102, 197, 0.5); /* Stronger glow */
+    border-color: #a09fe8; /* Even lighter border for active */
 }
 
 .difficulty-button.completed {
     position: relative;
-    padding-right: 35px; /* Make space for the checkmark */
+    padding-right: 35px;
+    background-color: #0ff; /* Cyan for completed, matching PONG text shadow */
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5); /* Enhanced cyan glow */
 }
 
 .difficulty-button.completed::after {
-    content: '\2713'; /* Unicode checkmark character */
+    content: '\2713';
     position: absolute;
     right: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: #4CAF50; /* Green color for checkmark */
+    color: #1a1a1a; /* Darker color for checkmark on bright background */
     font-size: 1.2rem;
 }
 
 .start-screen button {
-    background-color: #007bff; /* Blue color for start button */
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
+    background-color: #2F2975; /* Base spaceship color */
+    color: #e8e6fa;
+    padding: 18px 40px;
+    border: 2px solid #6B66C5;
+    border-radius: 10px;
+    font-size: 1.5rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 15px rgba(107, 102, 197, 0.6);
 }
 
 .start-screen button:hover {
-    background-color: #0056b3;
+    background-color: #3f398e;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px rgba(107, 102, 197, 0.8);
 }
 
 .game-over-screen {
@@ -121,36 +149,46 @@ body {
 
 .game-over-screen h2 {
     margin-bottom: 20px;
-    color: #fff;
+    color: #e8e6fa; /* Light text color */
+    text-shadow: 0 0 15px #6B66C5, 0 0 25px #6B66C5; /* Glow matching lighter shade */
 }
 
 .game-over-screen p {
     font-size: 1.5rem;
     margin-bottom: 30px;
+    color: #e8e6fa; /* Light text color */
+    text-shadow: 0 0 5px #e8e6fa; /* Subtle glow for text */
 }
 
 .game-over-screen button {
-    background-color: #4CAF50; /* Green for Play Again */
-    color: white;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 5px;
-    font-size: 1.2rem;
+    background-color: #2F2975; /* Base spaceship color */
+    color: #e8e6fa;
+    padding: 12px 25px;
+    border: 2px solid #6B66C5;
+    border-radius: 8px;
+    font-size: 1.1rem;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    margin: 0 10px; /* Add some space between buttons */
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease;
+    margin: 0 10px;
+    box-shadow: 0 0 10px rgba(107, 102, 197, 0.4);
 }
 
 .game-over-screen button:hover {
-    background-color: #45a049;
+    background-color: #3f398e;
+    transform: translateY(-2px);
+    box-shadow: 0 0 15px rgba(107, 102, 197, 0.7);
 }
 
 #backToStartButton {
-    background-color: #f44336; /* Red for Back to Start */
+    background-color: #1E1A4F; /* Darker shade of spaceship color */
+    color: #e8e6fa;
+    border: 2px solid #2F2975;
+    box-shadow: 0 0 10px rgba(47, 41, 117, 0.4);
 }
 
 #backToStartButton:hover {
-    background-color: #da190b;
+    background-color: #2F2975;
+    box-shadow: 0 0 15px rgba(47, 41, 117, 0.7);
 }
 
 /* Optional: Add some glow to paddles/ball if desired using JS or more CSS */
