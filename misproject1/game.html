@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pong Game | Student Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/game.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Student Portfolio</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="hobbies.html" class="nav-link">Hobbies</a></li>
+                <li><a href="discover.html" class="nav-link">Discover</a></li>
+                <li><a href="resume.html" class="nav-link">Resume</a></li>
+                <li><a href="career.html" class="nav-link">Career</a></li>
+                <li><a href="game.html" class="nav-link active">Game</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="start-screen" id="startScreen">
+        <h1>PONG</h1>
+        <img id="spaceship" src="media/spaceship.png" alt="Spaceship">
+        <p>Use your mouse to control the left paddle.</p>
+        <div class="difficulty-selection">
+            <button id="easyBtn" class="difficulty-button active" data-difficulty="easy">Easy</button>
+            <button id="mediumBtn" class="difficulty-button" data-difficulty="medium">Medium</button>
+            <button id="hardBtn" class="difficulty-button" data-difficulty="hard">Hard</button>
+        </div>
+    </div>
+    <canvas id="pong" width="800" height="400"></canvas>
+
+    <div class="game-over-screen" id="gameOverScreen">
+        <h2 id="winnerText"></h2>
+        <p id="finalScore"></p>
+        <button id="playAgainButton">Play Again</button>
+        <button id="backToStartButton">Back to Start</button>
+    </div>
+
+    <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
+</body>
