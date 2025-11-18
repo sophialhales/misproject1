@@ -6,8 +6,37 @@
     <title>Career Interests | Student Portfolio</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
+    <style>
+        #company2 .responsive-image:hover {
+            transform: none;
+        }
+
+        .right-column-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center; /* Center the image and text horizontally */
+            text-align: center; /* Center text within the column */
+        }
+
+        .right-column-content .responsive-image {
+            margin-bottom: 1rem; /* Space between image and text below it */
+        }
+
+        .right-column-content .feature-list {
+            text-align: left; /* Align feature list text to the left */
+        }
+
+        /* Adjusting for smaller screens if needed, though flexbox handles much of this */
+        @media (max-width: 768px) {
+            .right-column-content {
+                align-items: flex-start; /* Left-align content on smaller screens if desired */
+                text-align: left;
+            }
+        }
+    </style>
 </head>
 <body>
+    <a id="top"></a>
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -73,14 +102,22 @@
                                 3M - Internship/Full-time Opportunity
                             </h2>
                             <div class="mb-2">
+                                <p><strong>Company:</strong> 3M Company</p>
+                                <p><strong>Address:</strong> 3M Center, St Paul, MN 55144</p>
+                                <p><strong>Website:</strong> <a href="https://www.3m.com/careers" target="_blank">www.3m.com/careers</a></p>
+                                <p><strong>Department:</strong> Data Analytics/Internship Program</p>
+                                <p><strong>Phone:</strong> (651) 318-0326</p>
+                                <p><strong>Email:</strong> careers@3m.com</p>
                                 <p><strong>Position:</strong> Data Analyst Intern/Full-time</p>
                                 <p><strong>Location:</strong> Maplewood, MN</p>
-                                <p><strong>Application Status:</strong> Actively researching opportunities</p>
                             </div>
                             <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Why 3M Appeals to Me</h3>
-                            <p style="line-height: 1.7; margin-bottom: 1.5rem;">
+                        <p style="line-height: 1.7; margin-bottom: 1.5rem;">
                                 3M is an iconic innovation company with a rich history of scientific discovery and practical application. Their diverse portfolio, ranging from consumer goods to healthcare and industrial products, demonstrates a commitment to solving real-world challenges through technology and research. I am particularly drawn to their focus on sustainability and their collaborative work culture.
                             </p>
+                        </div>
+                        <div class="right-column-content">
+                            <img src="media/3m.png" alt="3M Global Headquarters" class="responsive-image">
                             <h3 style="color: var(--accent-color); margin-bottom: 1rem;">What Makes Me Qualified</h3>
                             <ul class="feature-list">
                                 <li>Strong analytical and problem-solving skills developed through business coursework.</li>
@@ -89,93 +126,58 @@
                                 <li>Ability to work effectively in interdisciplinary teams to achieve strategic objectives.</li>
                                 <li>A passion for continuous learning and adapting to new business technologies and market trends.</li>
                             </ul>
-                        </div>
-                        <div>
-                            <img src="https://images.unsplash.com/photo-1629853820692-e421e42b10a2?w=400&h=300&fit=crop" alt="3M Global Headquarters" class="responsive-image">
-                        </div>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">How My Skills Align with 3M's Needs</h3>
-                        <p style="line-height: 1.7; margin-bottom: 1.5rem;">
-                            My analytical abilities and eagerness to contribute to innovative projects align well with 3M's mission. My experience at RBC Access Point provided me with a strong foundation in understanding complex business needs and translating them into actionable insights, which would be invaluable in a diverse, global company like 3M that leverages data across various sectors for strategic growth and operational efficiency.
-                        </p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Company 1 Contact & Details -->
-            <section class="page-section">
-                <div class="card">
-                    <h3 class="section-title">3M Company Information & Contact</h3>
-                    <div class="grid grid-2">
-                        <div>
-                            <h4 style="color: var(--accent-color); margin-bottom: 1rem;">Complete Contact Information</h4>
-                            <div class="company-contact">
-                                <p><i class="fas fa-building" style="color: var(--secondary-color); margin-right: 0.5rem;"></i> 
-                                    <strong>Company:</strong> 3M Company</p>
-                                <p><i class="fas fa-map-marker-alt" style="color: var(--secondary-color); margin-right: 0.5rem;"></i> 
-                                    <strong>Address:</strong> 3M Center, St Paul, MN 55144</p>
-                                <p><i class="fas fa-phone" style="color: var(--secondary-color); margin-right: 0.5rem;"></i> 
-                                    <strong>Phone:</strong> (651) 733-1110</p>
-                                <p><i class="fas fa-globe" style="color: var(--secondary-color); margin-right: 0.5rem;"></i> 
-                                    <strong>Website:</strong> www.3m.com/careers</p>
-                                <p><i class="fas fa-envelope" style="color: var(--secondary-color); margin-right: 0.5rem;"></i> 
-                                    <strong>Email:</strong> (Not publicly available, use career portal)</p>
-                                <p><i class="fab fa-linkedin" style="color: var(--secondary-color); margin-right: 0.5rem;"></i> 
-                                    <strong>LinkedIn:</strong> company/3m</p>
+                            <div class="mt-3">
+                                <h3 style="color: var(--accent-color); margin-bottom: 1rem;">How My Skills Align with 3M's Needs</h3>
+                                <p style="line-height: 1.7; margin-bottom: 1.5rem;">
+                                    My analytical abilities and eagerness to contribute to innovative projects align well with 3M's mission. My experience at RBC Access Point provided me with a strong foundation in understanding complex business needs and translating them into actionable insights, which would be invaluable in a diverse, global company like 3M that leverages data across various sectors for strategic growth and operational efficiency.
+                                </p>
                             </div>
                         </div>
-                        <div>
-                            <h4 style="color: var(--accent-color); margin-bottom: 1rem;">Why I'm Qualified (Previous Internship Experience)</h4>
-                            <ul class="feature-list">
-                                <li>Gained practical experience in data analysis and business processes at RBC Access Point.</li>
-                                <li>Developed strong analytical skills through real-world projects.</li>
-                                <li>Familiarity with corporate environments and cross-functional teams.</li>
-                                <li>Experience in presenting findings and communicating with stakeholders.</li>
-                                <li>Demonstrated ability to learn and adapt to new systems and tools quickly.</li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </section>
 
-            <!-- Company 2: Future Company of Interest -->
+            <!-- Company 2: Travelers Insurance -->
             <section id="company2" class="page-section">
                 <div class="card company-card">
                     <div class="grid grid-2">
                         <div>
                             <h2 class="section-title">
-                                <i class="fas fa-question-circle" style="color: var(--secondary-color); margin-right: 0.5rem;"></i>
-                                Future Company of Interest
+                                <i class="fas fa-briefcase" style="color: var(--secondary-color); margin-right: 0.5rem;"></i>
+                                Travelers Insurance - Business Insights & Analytics Program
                             </h2>
                             <div class="mb-2">
-                                <p><strong>Company:</strong> [Company Name]</p>
-                                <p><strong>Position:</strong> [Job Title]</p>
-                                <p><strong>Location:</strong> [Location]</p>
-                                <p><strong>Application Status:</strong> Researching / Planning to apply</p>
+                                <p><strong>Company:</strong> Travelers Insurance</p>
+                                <p><strong>Address:</strong> 8120 Penn Ave S, Minneapolis, MN 55431</p>
+                                <p><strong>Website:</strong> <a href="https://careers.travelers.com/" target="_blank">careers.travelers.com</a></p>
+                                <p><strong>Department:</strong> Business Insights & Analytics Program</p>
+                                <p><strong>Phone:</strong> (952) 888-2673</p>
+                                <p><strong>Email:</strong> careers@travelers.com</p>
+                                <p><strong>Position:</strong> Business Insights & Analytics Intern/Analyst</p>
+                                <p><strong>Location:</strong> St. Paul, MN</p>
                             </div>
-                            <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Why I Like This Company (Placeholder)</h3>
-                            <p style="line-height: 1.7; margin-bottom: 1.5rem;">
-                                This section would describe what specifically attracts me to this company, such as its market leadership, innovative business models, commitment to social responsibility, or opportunities for professional growth within a business context. I would elaborate on how their strategic direction aligns with my interests and long-term career aspirations.
-                            </p>
-                            <h3 style="color: var(--accent-color); margin-bottom: 1rem;">What Makes Me Qualified (Placeholder)</h3>
-                            <ul class="feature-list">
-                                <li>Relevant business acumen and experiences that match the company's strategic requirements.</li>
-                                <li>Academic achievements or project work applicable to their industry or business functions.</li>
-                                <li>Demonstrated ability to contribute to similar business projects or initiatives, driving measurable outcomes.</li>
-                            </ul>
-                        </div>
-                        <div>
-                            <img src="https://images.unsplash.com/photo-1550592881-22906d4458f3?w=400&h=300&fit=crop" alt="Generic Office Building" class="responsive-image">
-                        </div>
-                    </div>
-                    
-                    <div class="mt-3">
-                        <h3 style="color: var(--accent-color); margin-bottom: 1rem;">How My Skills & Interests Align with Their Needs (Placeholder)</h3>
+                            <h3 style="color: var(--accent-color); margin-bottom: 1rem;">Why Travelers Insurance Appeals to Me</h3>
                         <p style="line-height: 1.7; margin-bottom: 1.5rem;">
-                            Here, I would detail how my specific business skills, educational background (including my minor in Computer Science as a valuable asset for business in tech), and professional interests directly address the strategic needs and operational challenges faced by this particular company. I would highlight how I can be a valuable asset to their business objectives and contribute to their overall success.
-                        </p>
+                                Travelers Insurance stands out for its strong reputation in the insurance industry, its commitment to innovation in data analytics, and its dedication to fostering a supportive and challenging work environment. I am particularly interested in their Business Insights & Analytics program, which offers a unique opportunity to apply analytical skills to real-world business problems within the financial services sector. Their focus on leveraging data for strategic decision-making aligns perfectly with my career aspirations.
+                            </p>
+                        </div>
+                        <div class="right-column-content">
+                            <img src="media/travelers.png" alt="Travelers Insurance Building" class="responsive-image">
+                            <h3 style="color: var(--accent-color); margin-bottom: 1rem;">What Makes Me Qualified</h3>
+                            <ul class="feature-list">
+                                <li>Strong analytical and quantitative skills developed through my business coursework and minor in Computer Science.</li>
+                                <li>Experience in data analysis and problem-solving from my RBC Access Point Internship.</li>
+                                <li>Eagerness to contribute to projects that enhance business processes and expand strategic expertise in a data-driven environment.</li>
+                                <li>A proactive approach to learning new technologies and methodologies relevant to business intelligence and analytics.</li>
+                                <li>Ability to work effectively in collaborative teams, as demonstrated through various academic and professional experiences.</li>
+                            </ul>
+                            <div class="mt-3">
+                                <h3 style="color: var(--accent-color); margin-bottom: 1rem;">How My Skills & Interests Align with Their Needs</h3>
+                                <p style="line-height: 1.7; margin-bottom: 1.5rem;">
+                                    My analytical abilities, coupled with my interest in data-driven decision making and my background in business and computer science, make me a strong candidate for Travelers' Business Insights & Analytics program. I am eager to apply my skills to analyze complex datasets, identify key business trends, and contribute to the development of innovative solutions that drive growth and operational efficiency within the insurance industry. My collaborative mindset and commitment to continuous learning will allow me to thrive in their dynamic environment.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>
@@ -280,17 +282,24 @@
                         in the industry. Feel free to reach out!
                     </p>
                     <div class="grid grid-3">
-                        <a href="mailto:your.email@example.com" class="btn">
+                        <a href="mailto:sophialhales@gmail.com" class="btn">
                             <i class="fas fa-envelope"></i><br>Email Me
                         </a>
                         <a href="resume.html" class="btn btn-secondary">
                             <i class="fas fa-file-alt"></i><br>View My Resume
                         </a>
-                        <a href="https://linkedin.com/in/yourprofile" class="btn btn-outline" onclick="showNotification('LinkedIn profile would open here!', 'info')">
+                        <a href="https://www.linkedin.com/in/sophiahales/" class="btn btn-outline" onclick="showNotification('LinkedIn profile would open here!', 'info')">
                             <i class="fab fa-linkedin"></i><br>Connect on LinkedIn
                         </a>
                     </div>
                 </div>
+            </section>
+
+            <!-- Back to Top -->
+            <section class="page-section text-center">
+                <a href="#top" class="btn btn-outline">
+                    <i class="fas fa-arrow-up"></i> Back to Top
+                </a>
             </section>
         </div>
     </div>

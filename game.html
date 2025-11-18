@@ -9,7 +9,27 @@
     <link rel="stylesheet" href="css/game.css">
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 </head>
-<body class="game-page">
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">Student Portfolio</a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="hobbies.html" class="nav-link">Hobbies</a></li>
+                <li><a href="discover.html" class="nav-link">Discover</a></li>
+                <li><a href="resume.html" class="nav-link">Resume</a></li>
+                <li><a href="career.html" class="nav-link">Career</a></li>
+                <li><a href="game.html" class="nav-link active">Game</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
     <div class="start-screen" id="startScreen">
         <h1>PONG</h1>
         <img id="spaceship" src="media/spaceship.png" alt="Spaceship">
@@ -19,7 +39,6 @@
             <button id="mediumBtn" class="difficulty-button" data-difficulty="medium">Medium</button>
             <button id="hardBtn" class="difficulty-button" data-difficulty="hard">Hard</button>
         </div>
-        <!-- <button id="startGameButton">Start Game</button> -->
     </div>
     <canvas id="pong" width="800" height="400"></canvas>
 
@@ -31,4 +50,5 @@
     </div>
 
     <script src="js/game.js"></script>
+    <script src="js/main.js"></script>
 </body>
