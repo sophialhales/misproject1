@@ -34,7 +34,7 @@
         <div class="content-wrapper">
             <!-- Profile Section -->
             <section class="profile-section page-section">
-                <img src="media/sophia-hales-headshot.jpg" alt="Professional Headshot" class="profile-image">
+                <img src="media/headshot.png" alt="Professional Headshot" class="profile-image">
                 <h1 class="profile-name">Sophia Hales</h1>
                 <p class="profile-title">Student at University of Minnesota Duluth</p>
             </section>
@@ -44,13 +44,10 @@
                 <div class="card">
                     <h2 class="section-title text-center">Welcome to My Portfolio</h2>
                     <div class="video-container">
-                        <div style="display: flex; justify-content: center; align-items: center; height: 100%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white; font-size: 1.2rem; text-align: center;">
-                            <div>
-                                <i class="fas fa-play-circle" style="font-size: 3rem; margin-bottom: 1rem;"></i>
-                                <p>Click to play welcome video</p>
-                                <p style="font-size: 0.9rem; opacity: 0.8;">30-second introduction coming soon!</p>
-                            </div>
-                        </div>
+                        <video controls preload="metadata" poster="media/bar.2.jpg">
+                            <source src="media/introvideo.mp4" type="video/mp4">
+                            Your browser does not support the video tag.
+                        </video>
                     </div>
                 </div>
             </section>
@@ -94,7 +91,7 @@
             <!-- Two Hobby Summaries -->
             <section class="page-section">
                 <h2 class="page-title">My Hobbies & Interests</h2>
-                <div class="grid grid-2">
+                <div class="grid grid-3">
                     <!-- Hobby 1 -->
                     <div class="card">
                         <img src="media/hiking.jpg" alt="Hiking Trail" class="responsive-image mb-2">
@@ -121,6 +118,19 @@
                             helping them rehabilitate and find their forever families.
                         </p>
                         <a href="hobbies.html#fostering" class="btn btn-outline mt-2">Learn More</a>
+                    </div>
+
+                    <!-- Hobby 3 -->
+                    <div class="card">
+                        <img src="media/food2.jpg" alt="Lago Tacos tacos and fries" class="responsive-image mb-2">
+                        <h3 style="color: var(--secondary-color); margin-bottom: 1rem;">
+                            <i class="fas fa-utensils"></i> Trying New Food
+                        </h3>
+                        <p style="line-height: 1.6;">
+                            Exploring diverse cuisines and restaurants is a delightful adventure,
+                            offering a chance to savor new flavors and experience different cultures.
+                        </p>
+                        <a href="hobbies.html#food" class="btn btn-outline mt-2">Learn More</a>
                     </div>
                 </div>
             </section>
