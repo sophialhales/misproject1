@@ -6,8 +6,16 @@ const easyBtn = document.getElementById('easyBtn');
 const mediumBtn = document.getElementById('mediumBtn');
 const hardBtn = document.getElementById('hardBtn');
 
-const WIDTH = canvas.width;
-const HEIGHT = canvas.height;
+// Original game dimensions (fixed reference for scaling)
+const ORIGINAL_GAME_WIDTH = 800;
+const ORIGINAL_GAME_HEIGHT = 400;
+
+let WIDTH = ORIGINAL_GAME_WIDTH; // Current canvas width
+let HEIGHT = ORIGINAL_GAME_HEIGHT; // Current canvas height
+
+// Update canvas dimensions initially
+canvas.width = WIDTH;
+canvas.height = HEIGHT;
 
 // Image assets
 const backgroundImg = new Image();
@@ -65,10 +73,19 @@ ballImg.onload = imageLoaded;
 spaceshipImg.onload = imageLoaded; // Added spaceshipImg to onload listeners
 
 // Paddle properties
-const PADDLE_WIDTH = 15;
-const PADDLE_HEIGHT = 100;
-const PADDLE_MARGIN = 20;
-let PADDLE_SPEED = 2.5; // Changed to let, as it will be dynamic based on difficulty
+const PADDLE_WIDTH_BASE = 15;
+const PADDLE_HEIGHT_BASE = 100;
+const PADDLE_MARGIN_BASE = 20;
+let PADDLE_SPEED_BASE = 2.5; // Base speed, will be scaled
+
+// Current scaled values
+let scaledPaddleWidth = PADDLE_WIDTH_BASE;
+let scaledPaddleHeight = PADDLE_HEIGHT_BASE;
+let scaledPaddleMargin = PADDLE_MARGIN_BASE;
+let scaledPaddleSpeed = PADDLE_SPEED_BASE;
+let scaledBallSize;
+let scaledBallSpeed;
+let scaledFont;
 
 // Difficulty levels
 const DIFFICULTY_LEVELS = {
@@ -99,12 +116,41 @@ function saveGameProgress() {
     localStorage.setItem('pongGameProgress', JSON.stringify(progress));
 }
 
+// Function to update all scaled dimensions and positions of game elements
+function updateScaledDimensions() {
+    const scaleX = WIDTH / ORIGINAL_GAME_WIDTH;
+    const scaleY = HEIGHT / ORIGINAL_GAME_HEIGHT;
+
+    scaledPaddleWidth = PADDLE_WIDTH_BASE * scaleX;
+    scaledPaddleHeight = PADDLE_HEIGHT_BASE * scaleY;
+    scaledPaddleMargin = PADDLE_MARGIN_BASE * scaleX;
+    scaledPaddleSpeed = PADDLE_SPEED_BASE * scaleY; // Scale speed with Y for vertical movement
+    scaledBallSize = BALL_SIZE_BASE * Math.min(scaleX, scaleY); // Scale ball by the smaller of the two scale factors
+    scaledBallSpeed = BALL_SPEED_BASE * Math.min(scaleX, scaleY); // Scale ball speed by the smaller of the two scale factors
+
+    scaledFont = 30 * Math.min(scaleX, scaleY); // Scale font by the smaller of the two scale factors
+
+    leftPaddle.width = scaledPaddleWidth;
+    leftPaddle.height = scaledPaddleHeight;
+    leftPaddle.x = scaledPaddleMargin;
+    leftPaddle.y = (HEIGHT / 2) - (scaledPaddleHeight / 2);
+
+    rightPaddle.width = scaledPaddleWidth;
+    rightPaddle.height = scaledPaddleHeight;
+    rightPaddle.x = WIDTH - scaledPaddleMargin - scaledPaddleWidth;
+    rightPaddle.y = (HEIGHT / 2) - (scaledPaddleHeight / 2);
+
+    ball.size = scaledBallSize;
+    ball.x = (WIDTH / 2) - (scaledBallSize / 2);
+    ball.y = (HEIGHT / 2) - (scaledBallSize / 2);
+}
+
 // Call loadGameProgress on initial load
 loadGameProgress();
 
 // Ball properties
-const BALL_SIZE = 16;
-const BALL_SPEED = 6;
+const BALL_SIZE_BASE = 16;
+const BALL_SPEED_BASE = 6;
 
 // Game state
 let leftScore = 0;
@@ -113,28 +159,28 @@ const WINNING_SCORE = 3; // Reduced winning score from 5 to 3
 let gameRunning = false; // Initially set to false, game starts with start screen
 
 // Left (player) paddle
-const leftPaddle = {
-    x: PADDLE_MARGIN,
-    y: HEIGHT / 2 - PADDLE_HEIGHT / 2,
-    width: PADDLE_WIDTH,
-    height: PADDLE_HEIGHT,
+let leftPaddle = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
     dy: 0
 };
 
 // Right (AI) paddle
-const rightPaddle = {
-    x: WIDTH - PADDLE_MARGIN - PADDLE_WIDTH,
-    y: HEIGHT / 2 - PADDLE_HEIGHT / 2,
-    width: PADDLE_WIDTH,
-    height: PADDLE_HEIGHT,
+let rightPaddle = {
+    x: 0,
+    y: 0,
+    width: 0,
+    height: 0,
     dy: 0
 };
 
 // Ball
-const ball = {
-    x: WIDTH / 2 - BALL_SIZE / 2,
-    y: HEIGHT / 2 - BALL_SIZE / 2,
-    size: BALL_SIZE,
+let ball = {
+    x: 0,
+    y: 0,
+    size: 0,
     speedX: 0, // Will be set by setBallVelocity
     speedY: 0  // Will be set by setBallVelocity
 };
@@ -145,12 +191,12 @@ function setBallVelocity(speed, angleRad, directionX) {
 }
 
 function resetBall() {
-    ball.x = WIDTH / 2 - BALL_SIZE / 2;
-    ball.y = HEIGHT / 2 - BALL_SIZE / 2;
+    ball.x = (WIDTH / 2) - (scaledBallSize / 2);
+    ball.y = (HEIGHT / 2) - (scaledBallSize / 2);
     // Randomize initial angle and direction
     let angle = Math.random() * (Math.PI / 2) - (Math.PI / 4); // Between -45 and 45 degrees
     let directionX = Math.random() < 0.5 ? 1 : -1;
-    setBallVelocity(BALL_SPEED, angle, directionX);
+    setBallVelocity(scaledBallSpeed, angle, directionX);
 }
 
 // Call resetBall initially to set up ball's starting velocity
@@ -183,7 +229,7 @@ function draw() {
     ctx.drawImage(ballImg, ball.x, ball.y, ball.size, ball.size);
 
     // Draw scores
-    ctx.font = '30px "Press Start 2P"';
+    ctx.font = `${scaledFont}px "Press Start 2P"`;
     ctx.textAlign = 'center';
     // Add a subtle glow to the scores
     ctx.shadowColor = '#00f'; // Blue glow
@@ -222,7 +268,7 @@ function update() {
         let collidePoint = (ball.y + ball.size/2) - (leftPaddle.y + leftPaddle.height/2);
         collidePoint = collidePoint / (leftPaddle.height/2); // Normalize to -1 to 1
         let angle = collidePoint * Math.PI/4;
-        setBallVelocity(BALL_SPEED, angle, 1); // Direction 1 for going right
+        setBallVelocity(scaledBallSpeed, angle, 1); // Direction 1 for going right
         hitSound.play(); // Play hit sound
     }
 
@@ -237,7 +283,7 @@ function update() {
         let collidePoint = (ball.y + ball.size/2) - (rightPaddle.y + rightPaddle.height/2);
         collidePoint = collidePoint / (rightPaddle.height/2); // Normalize to -1 to 1
         let angle = collidePoint * Math.PI/4;
-        setBallVelocity(BALL_SPEED, angle, -1); // Direction -1 for going left
+        setBallVelocity(scaledBallSpeed, angle, -1); // Direction -1 for going left
         hitSound.play(); // Play hit sound
     }
 
@@ -263,9 +309,9 @@ function update() {
 
     // AI paddle movement (simple follow)
     if (ball.y + ball.size/2 > rightPaddle.y + rightPaddle.height/2) {
-        rightPaddle.y += PADDLE_SPEED;
+        rightPaddle.y += scaledPaddleSpeed;
     } else if (ball.y + ball.size/2 < rightPaddle.y + rightPaddle.height/2) {
-        rightPaddle.y -= PADDLE_SPEED;
+        rightPaddle.y -= scaledPaddleSpeed;
     }
     // Prevent AI from going out of bounds
     rightPaddle.y = Math.max(0, Math.min(HEIGHT - rightPaddle.height, rightPaddle.y));
@@ -314,8 +360,8 @@ backToStartButton.addEventListener('click', () => {
     // Reset game state (optional, can be done when starting a new game)
     leftScore = 0;
     rightScore = 0;
-    leftPaddle.y = HEIGHT / 2 - PADDLE_HEIGHT / 2;
-    rightPaddle.y = HEIGHT / 2 - PADDLE_HEIGHT / 2;
+    leftPaddle.y = (HEIGHT / 2) - (scaledPaddleHeight / 2);
+    rightPaddle.y = (HEIGHT / 2) - (scaledPaddleHeight / 2);
     resetBall();
     gameRunning = false; // Ensure game loop is stopped
 
@@ -329,7 +375,8 @@ backToStartButton.addEventListener('click', () => {
 // Function to set the game difficulty
 function setDifficulty(level) {
     currentDifficulty = DIFFICULTY_LEVELS[level];
-    PADDLE_SPEED = currentDifficulty.speed;
+    PADDLE_SPEED_BASE = currentDifficulty.speed;
+    updateScaledDimensions(); // Recalculate everything after changing base speed
 
     updateDifficultyButtons(); // Update buttons to show checkmark
 }
@@ -352,10 +399,10 @@ function updateDifficultyButtons() {
 canvas.addEventListener('mousemove', function(e) {
     const rect = canvas.getBoundingClientRect();
     let mouseY = e.clientY - rect.top;
-    leftPaddle.y = mouseY - leftPaddle.height / 2;
+    leftPaddle.y = mouseY - (scaledPaddleHeight / 2);
     // Prevent paddle from going out of bounds
     if (leftPaddle.y < 0) leftPaddle.y = 0;
-    if (leftPaddle.y + leftPaddle.height > HEIGHT) leftPaddle.y = HEIGHT - leftPaddle.height;
+    if (leftPaddle.y + scaledPaddleHeight > HEIGHT) leftPaddle.y = HEIGHT - scaledPaddleHeight;
 });
 
 // Game loop
@@ -378,8 +425,8 @@ function startGame() {
     // Reset game state
     leftScore = 0;
     rightScore = 0;
-    leftPaddle.y = HEIGHT / 2 - PADDLE_HEIGHT / 2;
-    rightPaddle.y = HEIGHT / 2 - PADDLE_HEIGHT / 2;
+    leftPaddle.y = (HEIGHT / 2) - (scaledPaddleHeight / 2);
+    rightPaddle.y = (HEIGHT / 2) - (scaledPaddleHeight / 2);
     resetBall();
     gameRunning = true;
 
@@ -391,9 +438,5 @@ function startGame() {
 }
 
 // Initial setup
-// canvas.style.display = 'none'; // Hide canvas initially - handled by imageLoaded
-// startScreen.style.display = 'flex'; // Show start screen - handled by imageLoaded
-// startGameButton.addEventListener('click', startGame); - handled by imageLoaded
-
-// Ensure initial draw for start screen - handled by imageLoaded
-// draw();
+updateScaledDimensions(); // Ensure all game elements are scaled initially
+draw(); // Initial draw for start screen text
